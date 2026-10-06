@@ -1,6 +1,6 @@
 from functools import lru_cache
 
-from pydantic import Field, SecretStr
+from pydantic import Field, SecretStr, field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -31,7 +31,7 @@ class Settings(BaseSettings):
 
     LOG_LEVEL: str = "INFO"
 
-    JWT_SECRET_KEY: SecretStr = Field(default=SecretStr("beam-ai-development-super-secret-key-2026"))
+    JWT_SECRET_KEY: SecretStr
     JWT_ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60
     REFRESH_TOKEN_EXPIRE_DAYS: int = 14
@@ -43,6 +43,13 @@ class Settings(BaseSettings):
 
     GEMINI_API_KEY: str = Field(default="")
     GEMINI_MODEL: str = "gemini-3.1-flash-lite"
+
+    @field_validator("JWT_SECRET_KEY", mode="before")
+    @classmethod
+    def _reject_empty_jwt_secret(cls, value: object) -> object:
+        if isinstance(value, str) and not value.strip():
+            raise ValueError("JWT_SECRET_KEY must not be blank")
+        return value
 
     @property
     def SQLALCHEMY_DATABASE_URI(self) -> str:

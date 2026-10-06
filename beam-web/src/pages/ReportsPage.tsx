@@ -13,6 +13,7 @@ import {
 import { Button } from '../components/Button'
 import { Card } from '../components/Card'
 import { beamApi } from '../services/api/beam'
+import { API_V1_URL } from '../utils/env'
 
 const reports = [
   {
@@ -42,7 +43,7 @@ export function ReportsPage() {
     setDownloading(true)
     try {
       // Trigger live PDF download from FastAPI ReportLab backend
-      window.open('http://localhost:8000/api/v1/reports/download', '_blank')
+      window.open(`${API_V1_URL}/reports/download`, '_blank')
     } catch {
       // Fallback
     } finally {

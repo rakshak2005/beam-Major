@@ -1,9 +1,12 @@
 from __future__ import annotations
 
+import os
 import uuid
 from collections.abc import Generator
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
+
+os.environ.setdefault("JWT_SECRET_KEY", "test-secret-for-unit-test-only")
 
 import pytest
 from fastapi.testclient import TestClient

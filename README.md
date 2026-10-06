@@ -14,7 +14,7 @@ B.E.A.M. is organized as a modular workspace so the API, web client, AI workflow
 - `beam-ai/`: Training, inference, preprocessing, evaluation, explainability, and notebook workspace.
 - `beam-scraper/`: Independent Reddit ingestion scaffold for future data collection.
 - `beam-config/`: Shared prompts, environment templates, constants, labels, and settings.
-- `beam-datasets/`: Raw, processed, external, and export datasets.
+- `beam-datasets/`: Raw, processed, external, and export datasets. Includes the human annotation framework under `beam-datasets/annotation/` and the Streamlit annotation interface under `beam-ai/annotation_app/`.
 - `beam-models/`: Checkpoints, production models, and experiments.
 - `docs/`: Architecture, setup, roadmap, and API documentation.
 
@@ -41,6 +41,7 @@ beam/
 - Backend: FastAPI, SQLAlchemy, Alembic, Pydantic Settings, Uvicorn, PostgreSQL
 - AI/ML: PyTorch, HuggingFace Transformers, spaCy, scikit-learn
 - Infrastructure: Docker, Docker Compose
+- Annotation: Streamlit
 
 ## Installation
 
@@ -73,6 +74,14 @@ python -m uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 cd beam-web
 npm install
 npm run dev
+```
+
+### Annotation Interface
+
+```bash
+cd beam-ai
+export ANNOTATOR_ID=ANNOTATOR_A
+streamlit run beam-ai/annotation_app/app.py
 ```
 
 ## Docker Setup
